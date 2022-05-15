@@ -182,7 +182,10 @@ impl Builder for RelayMux {
         let relay_index = {
             let mut state = self.state.lock().unwrap();
             let key = bid_key_from(signed_block);
-            state.outstanding_bids.remove(&key).ok_or_else(|| Error::MissingOpenBid.into())?
+            state
+                .outstanding_bids
+                .remove(&key)
+                .ok_or_else(|| Error::MissingOpenBid.into())?
         };
 
         let relay = &self.relays[relay_index];
